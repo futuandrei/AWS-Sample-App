@@ -1,14 +1,17 @@
 version: 0.0
 os: linux
 files:
-  - source: /index.html
+  - source: .
     destination: /var/www/html/
-    overwrite: true # Add this line
 hooks:
   BeforeInstall:
+    - location: scripts/clean_old_files.sh # Add this script
+      timeout: 300
+      runas: root
     - location: scripts/install_dependencies
       timeout: 300
       runas: root
+  ApplicationStart:
     - location: scripts/start_server
       timeout: 300
       runas: root
